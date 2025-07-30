@@ -5,10 +5,19 @@ import { analyzeBusinessDescription, handleCorrectionFeedback } from "./services
 import { initializeOccupancyCodes, getMasterOccupancyList } from "./services/occupancy";
 import { analysisRequestSchema, feedbackRequestSchema } from "@shared/schema";
 import { z } from "zod";
+import { debugBusinessDescriptionsFile } from "./utils/excel-reader";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Initialize occupancy codes on startup
   await initializeOccupancyCodes();
+  
+  // Debug business descriptions files
+  console.log('\n=== STARTING FILE DEBUG ===');
+  try {
+    await debugBusinessDescriptionsFile();
+  } catch (error) {
+    console.error('File debug failed:', error);
+  }
 
   // Analyze business description
   app.post("/api/analyze", async (req, res) => {
@@ -127,6 +136,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Get stats error:", error);
       res.status(500).json({ error: "Failed to fetch stats" });
+    }
+  });
+
+  // Debug endpoint for file reading
+  app.get("/api/debug-files", async (req, res) => {
+    try {
+      await debugBusinessDescriptionsFile();
+      res.json({ message: "Debug complete - check server logs" });
+    } catch (error) {
+      console.error("Debug error:", error);
+      res.status(500).json({ error: "Debug failed", details: error.message });
     }
   });
 
