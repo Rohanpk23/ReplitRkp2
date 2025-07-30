@@ -1,14 +1,8 @@
-import { BarChart, History, Bolt, List, Upload, Download } from "lucide-react";
+import { FileText, History, List, Edit3 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
-import { getStats, getRecentCorrections } from "@/lib/api";
-
-interface Stats {
-  analysesToday: number;
-  accuracyRate: number;
-  avgProcessing: string;
-}
+import { getRecentCorrections } from "@/lib/api";
 
 interface Correction {
   occupancyCode: string;
@@ -17,11 +11,6 @@ interface Correction {
 }
 
 export default function Sidebar() {
-  const { data: stats } = useQuery<Stats>({
-    queryKey: ['/api/stats'],
-    refetchInterval: 30000 // Refresh every 30 seconds
-  });
-
   const { data: recentCorrections = [] } = useQuery<Correction[]>({
     queryKey: ['/api/recent-corrections'],
     refetchInterval: 60000 // Refresh every minute
@@ -40,91 +29,74 @@ export default function Sidebar() {
 
   return (
     <div className="space-y-6">
-      {/* Quick Stats */}
+      {/* Business Descriptions Dataset */}
       <Card className="bg-white shadow-sm border border-gray-200">
         <CardContent className="p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-            <BarChart className="mr-2 text-primary h-5 w-5" />
-            Session Stats
+            <FileText className="mr-2 text-primary h-5 w-5" />
+            Business Descriptions
           </h3>
           <div className="space-y-4">
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-gray-600">Analyses Today</span>
-              <span className="font-semibold text-gray-900">
-                {stats?.analysesToday ?? 0}
-              </span>
+            <div className="text-sm text-gray-600">
+              <p className="mb-2">Training dataset loaded successfully:</p>
+              <ul className="space-y-1 text-xs">
+                <li>• 41 business descriptions</li>
+                <li>• English & Hinglish support</li>
+                <li>• Real occupancy mappings</li>
+                <li>• Hinglish transcripts & structured data</li>
+              </ul>
             </div>
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-gray-600">Accuracy Rate</span>
-              <span className="font-semibold text-green-600">
-                {stats?.accuracyRate ?? 0}%
-              </span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-gray-600">Avg. Processing</span>
-              <span className="font-semibold text-gray-900">
-                {stats?.avgProcessing ?? "N/A"}
-              </span>
-            </div>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="w-full text-xs"
+              onClick={() => window.open('/api/business-descriptions', '_blank')}
+            >
+              <List className="mr-2 h-3 w-3" />
+              View Full Dataset
+            </Button>
           </div>
         </CardContent>
       </Card>
 
-      {/* Recent Corrections */}
+      {/* Model Corrections Log */}
       <Card className="bg-white shadow-sm border border-gray-200">
         <CardContent className="p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-            <History className="mr-2 text-primary h-5 w-5" />
-            Recent Corrections
+            <Edit3 className="mr-2 text-primary h-5 w-5" />
+            Model Corrections
           </h3>
           <div className="space-y-3">
             {recentCorrections.length === 0 ? (
-              <p className="text-sm text-gray-500">No recent corrections</p>
+              <div className="text-sm text-gray-500 space-y-2">
+                <p>No corrections recorded yet.</p>
+                <p className="text-xs">When agents provide feedback on incorrect suggestions, corrections are logged here to improve the AI model.</p>
+              </div>
             ) : (
-              recentCorrections.map((correction, index) => (
-                <div key={index} className="text-xs p-3 bg-red-50 rounded-lg">
-                  <div className="font-medium text-red-800 mb-1">
-                    {correction.occupancyCode} → {correction.correctionCode}
-                  </div>
-                  <div className="text-gray-600">
-                    {formatTimeAgo(correction.createdAt)}
-                  </div>
+              <div className="space-y-3">
+                <div className="text-xs text-gray-600 mb-3">
+                  Total corrections recorded: {recentCorrections.length}
                 </div>
-              ))
+                {recentCorrections.slice(0, 5).map((correction, index) => (
+                  <div key={index} className="text-xs p-3 bg-orange-50 border border-orange-200 rounded-lg">
+                    <div className="font-medium text-orange-800 mb-1">
+                      {correction.occupancyCode}
+                    </div>
+                    <div className="text-orange-600 mb-1">
+                      Corrected to: {correction.correctionCode}
+                    </div>
+                    <div className="text-gray-600">
+                      {formatTimeAgo(correction.createdAt)}
+                    </div>
+                  </div>
+                ))}
+                {recentCorrections.length > 5 && (
+                  <div className="text-xs text-gray-500 text-center">
+                    And {recentCorrections.length - 5} more corrections...
+                  </div>
+                )}
+              </div>
             )}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Quick Actions */}
-      <Card className="bg-white shadow-sm border border-gray-200">
-        <CardContent className="p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-            <Bolt className="mr-2 text-primary h-5 w-5" />
-            Quick Actions
-          </h3>
-          <div className="space-y-3">
-            <Button 
-              variant="ghost"
-              className="w-full justify-start p-3 rounded-lg hover:bg-gray-50 transition-colors"
-            >
-              <List className="text-gray-400 mr-3 h-4 w-4" />
-              <span className="text-sm text-gray-700">View Master Occupancy List</span>
-            </Button>
-            <Button 
-              variant="ghost"
-              className="w-full justify-start p-3 rounded-lg hover:bg-gray-50 transition-colors"
-            >
-              <Upload className="text-gray-400 mr-3 h-4 w-4" />
-              <span className="text-sm text-gray-700">Bulk Analysis Upload</span>
-            </Button>
-            <Button 
-              variant="ghost"
-              className="w-full justify-start p-3 rounded-lg hover:bg-gray-50 transition-colors"
-            >
-              <Download className="text-gray-400 mr-3 h-4 w-4" />
-              <span className="text-sm text-gray-700">Export Results</span>
-            </Button>
           </div>
         </CardContent>
       </Card>

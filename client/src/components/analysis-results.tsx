@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { List, Clock, ThumbsUp, ThumbsDown, RefreshCw, Check, Brain, Link } from "lucide-react";
+import { List, Clock, ThumbsUp, ThumbsDown, RefreshCw, Check, Brain, Link, Info } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -46,21 +46,30 @@ export default function AnalysisResults({ result, onFeedback, onReanalyze }: Ana
     }
   };
 
-  const getConfidenceBadgeClass = (confidence?: string) => {
+  const getConfidencePercentage = (confidence?: string) => {
     switch (confidence) {
-      case 'high': return 'confidence-high';
-      case 'medium': return 'confidence-medium';
-      case 'low': return 'confidence-low';
-      default: return 'confidence-medium';
+      case 'high': return '85-95%';
+      case 'medium': return '65-84%';
+      case 'low': return '40-64%';
+      default: return '65-84%';
     }
   };
 
-  const getConfidenceLabel = (confidence?: string) => {
+  const getConfidenceBadgeClass = (confidence?: string) => {
     switch (confidence) {
-      case 'high': return 'High Confidence';
-      case 'medium': return 'Medium Confidence';
-      case 'low': return 'Low Confidence';
-      default: return 'Medium Confidence';
+      case 'high': return 'bg-green-100 text-green-800 border-green-200';
+      case 'medium': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+      case 'low': return 'bg-red-100 text-red-800 border-red-200';
+      default: return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+    }
+  };
+
+  const getConfidenceReasoningTitle = (confidence?: string) => {
+    switch (confidence) {
+      case 'high': return 'High Confidence (85-95%): Direct match with clear indicators in the description';
+      case 'medium': return 'Medium Confidence (65-84%): Good match but requires some interpretation';
+      case 'low': return 'Low Confidence (40-64%): Possible match but with significant uncertainty';
+      default: return 'Medium Confidence (65-84%): Good match but requires some interpretation';
     }
   };
 
@@ -97,9 +106,17 @@ export default function AnalysisResults({ result, onFeedback, onReanalyze }: Ana
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center space-x-2 mb-2">
-                      <Badge className={getConfidenceBadgeClass(suggestion.confidence)}>
-                        {getConfidenceLabel(suggestion.confidence)}
-                      </Badge>
+                      <div className="flex items-center space-x-2">
+                        <Badge className={getConfidenceBadgeClass(suggestion.confidence)}>
+                          {getConfidencePercentage(suggestion.confidence)}
+                        </Badge>
+                        <div 
+                          className="flex items-center text-gray-400 hover:text-gray-600 cursor-help"
+                          title={getConfidenceReasoningTitle(suggestion.confidence)}
+                        >
+                          <Info className="h-4 w-4" />
+                        </div>
+                      </div>
                       <span className="text-sm text-gray-500">#{index + 1}</span>
                     </div>
                     <h3 className="font-semibold text-gray-900 mb-2">
