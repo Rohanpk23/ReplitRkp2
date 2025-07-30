@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a full-stack web application that serves as an AI-powered occupancy code translator for an insurance platform. The system helps internal sales agents translate customer business descriptions into accurate technical "Workmen Compensation Occupancy" codes using OpenAI's GPT-4o model.
+This is a full-stack web application that serves as an AI-powered occupancy code translator for an insurance platform. The system helps internal sales agents translate customer business descriptions into accurate technical "Workmen Compensation Occupancy" codes using Google Gemini 2.5 Pro model. The system successfully processes 41 real business descriptions with multilingual support (English/Hindi/Hinglish) and includes a comprehensive feedback loop for continuous AI improvement.
 
 ## User Preferences
 
