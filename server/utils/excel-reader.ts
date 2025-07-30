@@ -99,6 +99,91 @@ export function readBusinessDescriptionsFromExcel(filePath: string): BusinessDes
   }
 }
 
+export function readNewCSVFile(): BusinessDescription[] {
+  const filePath = 'attached_assets/CSVbusiness descriptions_1753915151575.csv';
+  
+  try {
+    console.log('Reading new CSV file directly...');
+    let csvContent = fs.readFileSync(filePath, 'utf8');
+    
+    // Remove BOM if present
+    if (csvContent.charCodeAt(0) === 0xFEFF) {
+      csvContent = csvContent.substring(1);
+    }
+    
+    const lines = csvContent
+      .split(/\r?\n/)
+      .map(line => line.trim())
+      .filter(line => line.length > 0 && !line.match(/^,+$/)); // Filter empty lines and lines with only commas
+    
+    console.log(`Found ${lines.length} lines in new CSV`);
+    
+    if (lines.length === 0) {
+      throw new Error('No valid lines found in CSV');
+    }
+    
+    // Parse headers
+    const headerLine = lines[0];
+    const headers = headerLine.split(',').map(h => h.trim().replace(/"/g, ''));
+    console.log('Headers:', headers.slice(0, 4)); // Show first 4 headers
+    
+    const businessDescriptions: BusinessDescription[] = [];
+    
+    for (let i = 1; i < lines.length; i++) {
+      const line = lines[i];
+      if (!line || line.match(/^,+$/)) continue; // Skip empty lines
+      
+      // Parse CSV line with quoted field support
+      const values: string[] = [];
+      let current = '';
+      let inQuotes = false;
+      
+      for (let j = 0; j < line.length; j++) {
+        const char = line[j];
+        
+        if (char === '"') {
+          inQuotes = !inQuotes;
+        } else if (char === ',' && !inQuotes) {
+          values.push(current.trim());
+          current = '';
+        } else {
+          current += char;
+        }
+      }
+      values.push(current.trim());
+      
+      // Create row object
+      const row: any = {};
+      headers.forEach((header, index) => {
+        row[header] = values[index] || '';
+      });
+      
+      // Extract business description
+      const description = row['business_description'] || '';
+      const caseId = row['case_id'] || i;
+      const correctOccupancy = row['correct_occupancies_simplified'] || '';
+      const dataSourceType = row['data_source_type'] || '';
+      
+      if (description && description.length > 5) {
+        businessDescriptions.push({
+          id: parseInt(caseId) || i,
+          business_description: description.trim(),
+          correct_occupancies_simplified: correctOccupancy,
+          data_source_type: dataSourceType,
+          type: 'csv_import'
+        });
+      }
+    }
+    
+    console.log(`Successfully parsed ${businessDescriptions.length} business descriptions from new CSV`);
+    return businessDescriptions;
+    
+  } catch (error) {
+    console.error('Error reading new CSV file:', error);
+    throw new Error(`Failed to read new CSV file: ${(error as Error).message}`);
+  }
+}
+
 export function readBusinessDescriptionsFromCSV(filePath: string): BusinessDescription[] {
   try {
     // Try different encodings
@@ -110,8 +195,12 @@ export function readBusinessDescriptionsFromCSV(filePath: string): BusinessDescr
         const csvContent = fs.readFileSync(filePath, encoding as BufferEncoding);
         
         // Check if this looks like actual CSV content (not binary)
-        if (csvContent.includes('\x00') || csvContent.includes('PK\x03\x04')) {
-          console.log(`${encoding} encoding shows binary content, skipping...`);
+        // Allow BOM and some special characters that might appear in CSV
+        const hasBinaryMarkers = csvContent.includes('\x00') || csvContent.includes('PK\x03\x04');
+        const hasCSVStructure = csvContent.includes(',') && (csvContent.includes('\n') || csvContent.includes('\r'));
+        
+        if (hasBinaryMarkers && !hasCSVStructure) {
+          console.log(`${encoding} encoding shows binary content without CSV structure, skipping...`);
           continue;
         }
         
@@ -282,6 +371,25 @@ export async function debugBusinessDescriptionsFile(): Promise<void> {
     } catch (error) {
       console.error('CSV reading failed:', error.message);
     }
+  }
+  
+  // Try reading the new CSV file
+  try {
+    console.log('\n--- READING NEW CSV FILE ---');
+    const newCsvData = readNewCSVFile();
+    console.log(`New CSV file contains ${newCsvData.length} business descriptions`);
+    if (newCsvData.length > 0) {
+      console.log('First 3 new CSV descriptions:');
+      newCsvData.slice(0, 3).forEach((desc, i) => {
+        console.log(`${i + 1}. ${desc.business_description.substring(0, 100)}...`);
+      });
+      console.log('Sample with correct occupancies:');
+      newCsvData.slice(0, 2).forEach((desc, i) => {
+        console.log(`${i + 1}. "${desc.business_description.substring(0, 50)}..." -> ${desc.correct_occupancies_simplified}`);
+      });
+    }
+  } catch (error) {
+    console.error('New CSV reading failed:', error.message);
   }
   
   console.log('=== DEBUG COMPLETE ===');
