@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .title { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; fill: #1f2937; }
+      .subtitle { font-family: Arial, sans-serif; font-size: 14px; fill: #6b7280; }
+      .box-text { font-family: Arial, sans-serif; font-size: 12px; fill: #374151; }
+      .process-box { fill: #dbeafe; stroke: #3b82f6; stroke-width: 2; }
+      .data-box { fill: #fef3c7; stroke: #f59e0b; stroke-width: 2; }
+      .ai-box { fill: #d1fae5; stroke: #10b981; stroke-width: 2; }
+      .user-box { fill: #fce7f3; stroke: #ec4899; stroke-width: 2; }
+      .arrow { stroke: #374151; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+      .feedback-arrow { stroke: #ef4444; stroke-width: 2; fill: none; marker-end: url(#arrowhead); stroke-dasharray: 5,5; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#374151" />
+    </marker>
+  </defs>
+  
+  <!-- Title -->
+  <text x="600" y="30" text-anchor="middle" class="title">AI Occupancy Translator - Product Flow</text>
+  <text x="600" y="50" text-anchor="middle" class="subtitle">Converting Business Descriptions to Insurance Occupancy Codes</text>
+  
+  <!-- User Input -->
+  <rect x="50" y="100" width="200" height="80" rx="10" class="user-box"/>
+  <text x="150" y="125" text-anchor="middle" class="box-text" font-weight="bold">Insurance Agent</text>
+  <text x="150" y="145" text-anchor="middle" class="box-text">Enters business description</text>
+  <text x="150" y="160" text-anchor="middle" class="box-text">(English/Hindi/Hinglish)</text>
+  
+  <!-- Data Sources -->
+  <rect x="350" y="80" width="180" height="60" rx="10" class="data-box"/>
+  <text x="440" y="105" text-anchor="middle" class="box-text" font-weight="bold">Master Occupancy List</text>
+  <text x="440" y="120" text-anchor="middle" class="box-text">~300 valid codes from CSV</text>
+  
+  <rect x="350" y="160" width="180" height="60" rx="10" class="data-box"/>
+  <text x="440" y="185" text-anchor="middle" class="box-text" font-weight="bold">Training Examples</text>
+  <text x="440" y="200" text-anchor="middle" class="box-text">41 real business cases</text>
+  
+  <!-- AI Processing -->
+  <rect x="600" y="100" width="200" height="80" rx="10" class="ai-box"/>
+  <text x="700" y="125" text-anchor="middle" class="box-text" font-weight="bold">Google Gemini AI</text>
+  <text x="700" y="145" text-anchor="middle" class="box-text">Analyzes description</text>
+  <text x="700" y="160" text-anchor="middle" class="box-text">Matches to occupancy codes</text>
+  
+  <!-- Analysis Results -->
+  <rect x="850" y="100" width="200" height="80" rx="10" class="process-box"/>
+  <text x="950" y="120" text-anchor="middle" class="box-text" font-weight="bold">AI Suggestions</text>
+  <text x="950" y="135" text-anchor="middle" class="box-text">Ranked occupancy codes</text>
+  <text x="950" y="150" text-anchor="middle" class="box-text">Confidence % (40-95%)</text>
+  <text x="950" y="165" text-anchor="middle" class="box-text">Detailed reasoning</text>
+  
+  <!-- Agent Review -->
+  <rect x="600" y="250" width="200" height="80" rx="10" class="user-box"/>
+  <text x="700" y="275" text-anchor="middle" class="box-text" font-weight="bold">Agent Reviews</text>
+  <text x="700" y="290" text-anchor="middle" class="box-text">👍 Correct suggestion</text>
+  <text x="700" y="305" text-anchor="middle" class="box-text">👎 Needs correction</text>
+  
+  <!-- Feedback Processing -->
+  <rect x="350" y="350" width="180" height="80" rx="10" class="process-box"/>
+  <text x="440" y="375" text-anchor="middle" class="box-text" font-weight="bold">Positive Feedback</text>
+  <text x="440" y="390" text-anchor="middle" class="box-text">Stored in database</text>
+  <text x="440" y="405" text-anchor="middle" class="box-text">Improves accuracy metrics</text>
+  
+  <rect x="600" y="350" width="200" height="80" rx="10" class="process-box"/>
+  <text x="700" y="375" text-anchor="middle" class="box-text" font-weight="bold">Correction Modal</text>
+  <text x="700" y="390" text-anchor="middle" class="box-text">Agent provides correct code</text>
+  <text x="700" y="405" text-anchor="middle" class="box-text">Explains reasoning</text>
+  
+  <!-- Learning Database -->
+  <rect x="850" y="350" width="200" height="80" rx="10" class="data-box"/>
+  <text x="950" y="375" text-anchor="middle" class="box-text" font-weight="bold">Learning Database</text>
+  <text x="950" y="390" text-anchor="middle" class="box-text">Stores all corrections</text>
+  <text x="950" y="405" text-anchor="middle" class="box-text">Tracks improvement trends</text>
+  
+  <!-- Continuous Improvement -->
+  <rect x="600" y="500" width="200" height="80" rx="10" class="ai-box"/>
+  <text x="700" y="525" text-anchor="middle" class="box-text" font-weight="bold">AI Learning Loop</text>
+  <text x="700" y="540" text-anchor="middle" class="box-text">Uses correction history</text>
+  <text x="700" y="555" text-anchor="middle" class="box-text">Improves future suggestions</text>
+  
+  <!-- Business Value -->
+  <rect x="150" y="650" width="900" height="60" rx="10" class="process-box"/>
+  <text x="600" y="675" text-anchor="middle" class="box-text" font-weight="bold">Business Impact</text>
+  <text x="300" y="695" text-anchor="middle" class="box-text">Faster Processing</text>
+  <text x="500" y="695" text-anchor="middle" class="box-text">Reduced Errors</text>
+  <text x="700" y="695" text-anchor="middle" class="box-text">Consistent Coding</text>
+  <text x="900" y="695" text-anchor="middle" class="box-text">Better Compliance</text>
+  
+  <!-- Flow Arrows -->
+  <line x1="250" y1="140" x2="340" y2="140" class="arrow"/>
+  <line x1="530" y1="140" x2="590" y2="140" class="arrow"/>
+  <line x1="800" y1="140" x2="840" y2="140" class="arrow"/>
+  <line x1="950" y1="180" x2="950" y2="220" class="arrow"/>
+  <line x1="950" y1="220" x2="700" y2="220" class="arrow"/>
+  <line x1="700" y1="220" x2="700" y2="240" class="arrow"/>
+  
+  <!-- Feedback arrows -->
+  <line x1="640" y1="290" x2="500" y2="350" class="feedback-arrow"/>
+  <line x1="700" y1="330" x2="700" y2="340" class="arrow"/>
+  <line x1="800" y1="390" x2="840" y2="390" class="arrow"/>
+  <line x1="950" y1="430" x2="950" y2="470" class="arrow"/>
+  <line x1="950" y1="470" x2="700" y2="470" class="arrow"/>
+  <line x1="700" y1="470" x2="700" y2="490" class="arrow"/>
+  
+  <!-- Learning loop arrow -->
+  <path d="M 600 540 Q 550 540 550 300 Q 550 120 590 120" class="feedback-arrow"/>
+  
+  <!-- Final impact arrow -->
+  <line x1="700" y1="580" x2="700" y2="630" class="arrow"/>
+  <line x1="600" y1="630" x2="600" y2="640" class="arrow"/>
+  
+  <!-- Legend -->
+  <rect x="50" y="500" width="250" height="120" rx="5" fill="white" stroke="#d1d5db" stroke-width="1"/>
+  <text x="175" y="520" text-anchor="middle" class="box-text" font-weight="bold">Process Legend</text>
+  
+  <rect x="60" y="530" width="15" height="10" class="user-box"/>
+  <text x="85" y="540" class="box-text">User Interaction</text>
+  
+  <rect x="60" y="550" width="15" height="10" class="ai-box"/>
+  <text x="85" y="560" class="box-text">AI Processing</text>
+  
+  <rect x="60" y="570" width="15" height="10" class="data-box"/>
+  <text x="85" y="580" class="box-text">Data Storage</text>
+  
+  <rect x="60" y="590" width="15" height="10" class="process-box"/>
+  <text x="85" y="600" class="box-text">System Process</text>
+  
+</svg>
