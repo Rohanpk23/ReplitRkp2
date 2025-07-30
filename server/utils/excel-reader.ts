@@ -102,24 +102,77 @@ export function readBusinessDescriptionsFromExcel(filePath: string): BusinessDes
 export function readBusinessDescriptionsFromCSV(filePath: string): BusinessDescription[] {
   try {
     // Try different encodings
-    const encodings = ['utf8', 'latin1', 'ascii', 'utf16le'];
+    const encodings = ['utf8', 'latin1', 'ascii', 'utf16le', 'ucs2'];
     
     for (const encoding of encodings) {
       try {
         console.log(`Trying to read CSV with ${encoding} encoding...`);
-        const csvContent = fs.readFileSync(filePath, encoding);
+        const csvContent = fs.readFileSync(filePath, encoding as BufferEncoding);
         
-        // Parse CSV manually
-        const lines = csvContent.split('\n').filter(line => line.trim());
+        // Check if this looks like actual CSV content (not binary)
+        if (csvContent.includes('\x00') || csvContent.includes('PK\x03\x04')) {
+          console.log(`${encoding} encoding shows binary content, skipping...`);
+          continue;
+        }
+        
+        // Parse CSV with proper handling of quotes and commas
+        const lines = csvContent
+          .split(/\r?\n/)
+          .map(line => line.trim())
+          .filter(line => line.length > 0);
+        
         if (lines.length === 0) continue;
         
-        const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+        console.log(`Found ${lines.length} lines with ${encoding} encoding`);
+        console.log('First line:', lines[0].substring(0, 100));
+        
+        // Parse CSV properly handling quoted fields
+        const parseCSVLine = (line: string): string[] => {
+          const result: string[] = [];
+          let current = '';
+          let inQuotes = false;
+          
+          for (let i = 0; i < line.length; i++) {
+            const char = line[i];
+            
+            if (char === '"') {
+              if (inQuotes && line[i + 1] === '"') {
+                current += '"';
+                i++; // Skip next quote
+              } else {
+                inQuotes = !inQuotes;
+              }
+            } else if (char === ',' && !inQuotes) {
+              result.push(current.trim());
+              current = '';
+            } else {
+              current += char;
+            }
+          }
+          
+          result.push(current.trim());
+          return result;
+        };
+        
+        const headers = parseCSVLine(lines[0]);
         console.log(`Headers found with ${encoding}:`, headers);
+        
+        // Check if headers look reasonable
+        const hasReasonableHeaders = headers.some(header => 
+          header.toLowerCase().includes('description') || 
+          header.toLowerCase().includes('business') ||
+          header.length > 5
+        );
+        
+        if (!hasReasonableHeaders && encoding !== 'utf8') {
+          console.log(`Headers don't look reasonable with ${encoding}, trying next encoding...`);
+          continue;
+        }
         
         const businessDescriptions: BusinessDescription[] = [];
         
         for (let i = 1; i < lines.length; i++) {
-          const values = lines[i].split(',').map(v => v.trim().replace(/"/g, ''));
+          const values = parseCSVLine(lines[i]);
           const row: any = {};
           
           headers.forEach((header, index) => {
@@ -131,29 +184,38 @@ export function readBusinessDescriptionsFromCSV(filePath: string): BusinessDescr
             'business_description',
             'Business Description',
             'Description',
-            'business description'
+            'business description',
+            'Business_Description',
+            'BUSINESS_DESCRIPTION',
+            'Business Descriptions',
+            'business descriptions'
           ];
           
           let description = '';
           for (const col of possibleDescriptionColumns) {
-            if (row[col] && row[col].trim()) {
+            if (row[col] && typeof row[col] === 'string' && row[col].trim()) {
               description = row[col].trim();
               break;
             }
           }
           
           if (!description) {
-            // Use first non-empty text value
-            description = Object.values(row).find(val => 
-              typeof val === 'string' && val.trim().length > 10
-            ) as string || '';
+            // Use first non-empty text value that looks like a description
+            for (const value of Object.values(row)) {
+              if (typeof value === 'string' && value.trim().length > 10 && 
+                  !value.match(/^\d+$/) && // Not just numbers
+                  !value.match(/^[\d\-\/]+$/)) { // Not just dates
+                description = value.trim();
+                break;
+              }
+            }
           }
           
           if (description && description.length > 5) {
             businessDescriptions.push({
               id: i,
               business_description: description,
-              type: row.type || 'unknown',
+              type: row.type || row.Type || 'csv_import',
               ...row
             });
           }
@@ -166,7 +228,7 @@ export function readBusinessDescriptionsFromCSV(filePath: string): BusinessDescr
         }
         
       } catch (err) {
-        console.log(`Failed with ${encoding} encoding:`, err.message);
+        console.log(`Failed with ${encoding} encoding:`, (err as Error).message);
         continue;
       }
     }
@@ -175,7 +237,7 @@ export function readBusinessDescriptionsFromCSV(filePath: string): BusinessDescr
     
   } catch (error) {
     console.error('Error reading CSV file:', error);
-    throw new Error(`Failed to read CSV file: ${error.message}`);
+    throw new Error(`Failed to read CSV file: ${(error as Error).message}`);
   }
 }
 
