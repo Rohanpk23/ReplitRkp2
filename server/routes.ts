@@ -27,7 +27,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { businessDescription } = analysisRequestSchema.parse(req.body);
       
       const masterList = await getMasterOccupancyList();
-      const result = await analyzeBusinessDescription(businessDescription, masterList);
+      
+      // Get recent corrections to help AI learn from mistakes
+      const recentFeedback = await storage.getRecentCorrections(10);
+      const recentCorrections = recentFeedback.map(correction => ({
+        wrongCode: correction.occupancyCode,
+        correctCode: correction.correctionCode || 'No correction provided',
+        reason: correction.correctionReason || 'No reason provided'
+      }));
+      
+
+      
+      const result = await analyzeBusinessDescription(businessDescription, masterList, recentCorrections);
       
       // Store analysis in database
       const analysis = await storage.createAnalysis({

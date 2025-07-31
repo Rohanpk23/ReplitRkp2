@@ -6,6 +6,8 @@ This is a full-stack web application that serves as an AI-powered occupancy code
 
 **Database Connection Status**: FULLY OPERATIONAL - PostgreSQL database connected and loaded with complete master occupancy list (300+ codes) from CSV source. AI suggestions now use authentic occupancy codes from master database, preventing hallucination and ensuring accuracy.
 
+**AI Learning System**: ACTIVE - The system now learns from user corrections by including recent feedback in AI analysis context. When users correct wrong suggestions, the AI automatically avoids repeating the same mistakes on similar business descriptions.
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.

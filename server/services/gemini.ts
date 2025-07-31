@@ -12,7 +12,8 @@ const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
 
 export async function analyzeBusinessDescription(
   businessDescription: string,
-  masterOccupancyList: string[]
+  masterOccupancyList: string[],
+  recentCorrections: Array<{wrongCode: string, correctCode: string, reason: string}> = []
 ): Promise<{
   suggested_occupancies: Suggestion[];
   overall_reasoning: string;
@@ -25,10 +26,17 @@ CRITICAL RULES:
 2. If you cannot find a confident match, return an empty array for suggested_occupancies
 3. Always provide reasoning linking your suggestions to specific phrases in the description
 4. Support English, Hindi, and Hinglish language understanding
-5. Respond with JSON in this exact format
+5. LEARN from recent corrections to avoid repeating mistakes
+6. Respond with JSON in this exact format
 
 Master Occupancy List:
 ${masterOccupancyList.join('\n')}
+
+RECENT CORRECTIONS (Learn from these mistakes):
+${recentCorrections.length > 0 ? recentCorrections.map(correction => 
+  `❌ WRONG: "${correction.wrongCode}" → ✅ CORRECT: "${correction.correctCode}" 
+   Reason: ${correction.reason}`
+).join('\n\n') : 'No recent corrections available.'}
 
 Response format (JSON only):
 {

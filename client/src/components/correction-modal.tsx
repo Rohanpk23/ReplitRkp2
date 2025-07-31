@@ -59,6 +59,10 @@ export default function CorrectionModal({
 
   const handleInputChange = (value: string) => {
     setCorrectOccupancy(value);
+    // Close suggestions when typing to prevent loops
+    if (showSuggestions) {
+      setShowSuggestions(false);
+    }
   };
 
   const handleSuggestionClick = (code: string) => {
