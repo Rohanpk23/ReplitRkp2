@@ -1,4 +1,4 @@
-import { Brain } from "lucide-react";
+import { Shield } from "lucide-react";
 
 export default function Header() {
   return (
@@ -6,10 +6,9 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center space-x-2">
-            <Brain className="h-8 w-8 text-primary" />
+            <Shield className="h-8 w-8 text-primary" />
             <div>
-              <h1 className="text-xl font-bold text-gray-900">AI Occupancy Translator</h1>
-              <p className="text-sm text-gray-600">Powered by Google Gemini</p>
+              <h1 className="text-xl font-bold text-gray-900">WC Risk Navigator</h1>
             </div>
           </div>
         </div>

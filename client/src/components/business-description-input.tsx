@@ -58,7 +58,7 @@ export default function BusinessDescriptionInput({
       <CardContent className="p-6">
         <div className="flex items-center space-x-2 mb-4">
           <Edit className="text-primary h-5 w-5" />
-          <h2 className="text-lg font-semibold text-gray-900">Tell us about your contract work or business</h2>
+          <h2 className="text-lg font-semibold text-gray-900">Tell me about your work in Hindi/English/Hinglish</h2>
         </div>
         
         <form onSubmit={handleSubmit} className="space-y-4">

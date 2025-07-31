@@ -1,8 +1,8 @@
-# AI Occupancy Translator - Replit Project Guide
+# WC Risk Navigator - Replit Project Guide
 
 ## Overview
 
-This is a full-stack web application that serves as an AI-powered occupancy code translator for an insurance platform. The system helps internal sales agents translate customer business descriptions into accurate technical "Workmen Compensation Occupancy" codes using Google Gemini 2.5 Pro model. The system successfully processes 41 real business descriptions with multilingual support (English/Hindi/Hinglish) and includes a comprehensive feedback loop for continuous AI improvement.
+This is a full-stack web application that serves as an AI-powered occupancy code translator for an insurance platform, rebranded as "WC Risk Navigator". The system helps internal sales agents translate customer business descriptions into accurate technical "Workmen Compensation Occupancy" codes using Google Gemini 2.5 Pro model. The system successfully processes 41 real business descriptions with multilingual support (English/Hindi/Hinglish) and includes a comprehensive feedback loop for continuous AI improvement.
 
 **Database Connection Status**: FULLY OPERATIONAL - PostgreSQL database connected and loaded with complete master occupancy list (288+ codes) from CSV source plus manually added CTA code. AI suggestions now use authentic occupancy codes from master database, preventing hallucination and ensuring accuracy.
 
@@ -24,6 +24,12 @@ The AI leverages the `correct_occupancies_simplified` column to learn **reasonin
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+
+## Recent Changes
+
+- **December 2024**: Rebranded application from "AI Occupancy Translator" to "WC Risk Navigator"
+- **UI Updates**: Changed header icon from Brain to Shield, removed "Powered by Google Gemini" branding
+- **Field Labels**: Updated input field label to "Tell me about your work in Hindi/English/Hinglish"
 
 ## System Architecture
 
