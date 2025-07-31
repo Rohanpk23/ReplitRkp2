@@ -64,7 +64,7 @@ export default function BusinessDescriptionInput({
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <Label htmlFor="business-description" className="block text-sm font-medium text-gray-700 mb-2">
-              Enter your business description in hindi/english/hinglish and I will suggest the WC occupancies with confidence Score
+              Enter your business description
             </Label>
             <Textarea
               id="business-description"
@@ -72,16 +72,13 @@ export default function BusinessDescriptionInput({
               onChange={(e) => setDescription(e.target.value)}
               rows={6}
               className="w-full resize-none"
-              placeholder="🚀 Tell me about your business - I understand Hindi, English, and Hinglish!"
+              placeholder="Tell me about your business"
               disabled={isAnalyzing}
             />
           </div>
           
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2 text-sm text-gray-600">
-              <Info className="h-4 w-4" />
-              <span>Supports English, Hindi, and Hinglish descriptions</span>
-            </div>
+
             <Button 
               type="submit" 
               disabled={isAnalyzing}

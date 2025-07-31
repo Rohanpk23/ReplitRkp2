@@ -10,7 +10,7 @@ export default function Header() {
               <Shield className="text-primary text-2xl h-6 w-6" />
               <h1 className="text-xl font-semibold text-gray-900">AI Occupancy Translator</h1>
             </div>
-            <span className="text-sm text-gray-500 hidden sm:inline">Insurance Platform</span>
+
           </div>
           <div className="flex items-center space-x-4">
             <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white text-sm font-medium">
