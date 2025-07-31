@@ -72,7 +72,7 @@ export default function BusinessDescriptionInput({
               onChange={(e) => setDescription(e.target.value)}
               rows={6}
               className="w-full resize-none"
-              placeholder="Enter customer's business description in plain language (English/Hindi/Hinglish)..."
+              placeholder="🚀 Tell me about your business - I understand Hindi, English, and Hinglish!"
               disabled={isAnalyzing}
             />
           </div>
