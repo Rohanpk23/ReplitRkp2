@@ -83,7 +83,7 @@ export default function Home() {
               <span>AI Occupancy Translator v2.1</span>
             </div>
             <div className="flex items-center space-x-4">
-              <span>Powered by OpenAI GPT</span>
+              <span>Powered by Google Gemini</span>
               <span>•</span>
               <span className="flex items-center space-x-1">
                 <i className="fas fa-shield-alt text-green-600"></i>
