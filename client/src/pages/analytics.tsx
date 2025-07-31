@@ -12,8 +12,15 @@ import {
   AlertTriangle,
   CheckCircle,
   Activity,
-  Calendar
+  Calendar,
+  Info
 } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface AnalyticsData {
   overview: {
@@ -102,6 +109,22 @@ export default function Analytics() {
         <div className="flex items-center space-x-2">
           <Activity className="h-6 w-6 text-primary" />
           <h1 className="text-2xl font-bold text-gray-900">Analytics Dashboard</h1>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Info className="h-4 w-4 text-gray-500 cursor-help" />
+              </TooltipTrigger>
+              <TooltipContent className="max-w-sm p-4 text-sm">
+                <div className="space-y-2">
+                  <p><strong>Total Analyses:</strong> Count of all business descriptions processed</p>
+                  <p><strong>Accuracy Rate:</strong> Percentage based on positive vs negative feedback received</p>
+                  <p><strong>Avg Processing:</strong> Average time taken by AI to analyze descriptions</p>
+                  <p><strong>Total Corrections:</strong> Number of times users provided corrections to improve suggestions</p>
+                  <p><strong>Confidence Levels:</strong> Distribution of AI confidence scores (High: 85-95%, Medium: 65-84%, Low: 40-64%)</p>
+                </div>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
         <Badge variant="outline" className="text-sm">
           <Calendar className="h-3 w-3 mr-1" />
