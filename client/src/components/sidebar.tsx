@@ -35,10 +35,15 @@ export default function Sidebar() {
         <CardContent className="p-4">
           <div className="flex items-center space-x-2 mb-3">
             <Edit3 className="text-primary h-4 w-4" />
-            <h3 className="text-md font-medium text-gray-900">AI Learning System</h3>
+            <h3 className="text-md font-medium text-gray-900">How does our AI get smarter? You're the teacher!</h3>
           </div>
-          <div className="text-sm text-gray-600 space-y-2">
-            <p>System learns from your feedback to improve accuracy over time.</p>
+          <div className="text-sm text-gray-600 space-y-3">
+            <p>
+              Right now, our AI is like a smart student making its best guess. Your '👍' or '👎' is you, the expert, grading its homework.
+            </p>
+            <p>
+              Every piece of feedback helps us build the perfect 'textbook' that will be used to train our AI from a smart student into a true specialist.
+            </p>
           </div>
         </CardContent>
       </Card>
