@@ -63,16 +63,13 @@ export default function BusinessDescriptionInput({
         
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <Label htmlFor="business-description" className="block text-sm font-medium text-gray-700 mb-2">
-              Enter your business description
-            </Label>
             <Textarea
               id="business-description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={6}
               className="w-full resize-none"
-              placeholder="Tell me about your business"
+              placeholder="Tell me about your work in Hindi/English/Hinglish"
               disabled={isAnalyzing}
             />
           </div>
