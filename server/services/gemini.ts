@@ -35,11 +35,13 @@ CRITICAL RULES:
 Master Occupancy List:
 ${masterOccupancyList.join('\n')}
 
-TRAINING EXAMPLES (Learn from these proven correct matches):
+TRAINING EXAMPLES (Use these as REFERENCE PATTERNS, not rigid rules):
 ${trainingExamples.length > 0 ? trainingExamples.map(example => 
-  `📝 INPUT: "${example.businessDescription}"
-   ✅ CORRECT: "${example.correctOccupancy}"
-   📋 SOURCE: ${example.reason}`
+  `📝 SIMILAR INPUT: "${example.businessDescription}"
+   ✅ REFERENCE MATCH: "${example.correctOccupancy}"
+   📋 USE AS: Pattern recognition guide only - adapt logic to current description
+   
+   IMPORTANT: This is a REFERENCE pattern. Apply similar reasoning logic to the current business description, but don't force exact matches. Consider the underlying business activity and match to the most appropriate occupancy from the master list.`
 ).join('\n\n') : 'No relevant training examples found.'}
 
 RECENT CORRECTIONS (Learn from these mistakes):
