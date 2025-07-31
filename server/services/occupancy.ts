@@ -56,7 +56,7 @@ export async function initializeOccupancyCodes(): Promise<void> {
     
     // Clear existing codes and reload all
     console.log("Clearing existing occupancy codes...");
-    // Note: We'll need to add a clear method to storage or handle this via direct SQL
+    await storage.clearAllOccupancyCodes();
     
     // Insert all codes
     let insertedCount = 0;
