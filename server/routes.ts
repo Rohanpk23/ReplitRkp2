@@ -8,8 +8,10 @@ import { z } from "zod";
 import { debugBusinessDescriptionsFile } from "./utils/excel-reader";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Initialize occupancy codes on startup
-  await initializeOccupancyCodes();
+  // Initialize occupancy codes on startup (async without blocking)
+  initializeOccupancyCodes().catch(error => {
+    console.error("Failed to initialize occupancy codes:", error);
+  });
   
   // Debug business descriptions files
   console.log('\n=== STARTING FILE DEBUG ===');

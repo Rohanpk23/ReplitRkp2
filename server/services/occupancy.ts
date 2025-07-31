@@ -39,8 +39,8 @@ export async function initializeOccupancyCodes(): Promise<void> {
     // Check if codes already exist
     const existingCodes = await storage.getAllOccupancyCodes();
     
-    if (existingCodes.length >= 250) { // Already have most codes
-      console.log(`Database already has ${existingCodes.length} occupancy codes`);
+    if (existingCodes.length >= 150) { // Already have a good amount of codes
+      console.log(`Database already has ${existingCodes.length} occupancy codes - skipping initialization`);
       return;
     }
     
@@ -83,4 +83,9 @@ export async function initializeOccupancyCodes(): Promise<void> {
 export function getOccupancyListForAI(): string {
   const codes = getAllOccupancyCodes();
   return codes.map(code => `- ${code}`).join('\n');
+}
+
+// Get master occupancy list for API usage
+export async function getMasterOccupancyList(): Promise<string[]> {
+  return getAllOccupancyCodes();
 }
