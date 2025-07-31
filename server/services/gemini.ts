@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import { GoogleGenAI, Modality } from "@google/genai";
 import type { Suggestion } from "@shared/schema";
+import { getRelevantTrainingExamples } from "./training-data";
 
 // DON'T DELETE THIS COMMENT
 // Follow these instructions when using this blueprint:
@@ -19,6 +20,8 @@ export async function analyzeBusinessDescription(
   overall_reasoning: string;
 }> {
   try {
+    // Get relevant training examples from business descriptions CSV
+    const trainingExamples = getRelevantTrainingExamples(businessDescription, 3);
     const systemPrompt = `You are an AI Occupancy Translator for an insurance platform. Your job is to analyze business descriptions (including English, Hindi, and Hinglish) and match them to exact occupancy codes from a master list.
 
 CRITICAL RULES:
@@ -31,6 +34,13 @@ CRITICAL RULES:
 
 Master Occupancy List:
 ${masterOccupancyList.join('\n')}
+
+TRAINING EXAMPLES (Learn from these proven correct matches):
+${trainingExamples.length > 0 ? trainingExamples.map(example => 
+  `📝 INPUT: "${example.businessDescription}"
+   ✅ CORRECT: "${example.correctOccupancy}"
+   📋 SOURCE: ${example.reason}`
+).join('\n\n') : 'No relevant training examples found.'}
 
 RECENT CORRECTIONS (Learn from these mistakes):
 ${recentCorrections.length > 0 ? recentCorrections.map(correction => 
