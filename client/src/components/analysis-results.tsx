@@ -76,69 +76,73 @@ export default function AnalysisResults({ result, onFeedback, onReanalyze }: Ana
   const timeAgo = new Date(result.createdAt).toLocaleString();
 
   return (
-    <Card className="mt-8 bg-white shadow-sm border border-gray-200">
-      <CardContent className="p-6">
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center space-x-2">
-            <List className="text-primary h-5 w-5" />
-            <h2 className="text-lg font-semibold text-gray-900">Analysis Results</h2>
+    <div className="mt-8 bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+      <div className="p-8">
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center space-x-3">
+            <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center">
+              <List className="text-white h-4 w-4" />
+            </div>
+            <h2 className="text-xl font-semibold text-gray-900">AI Analysis Results</h2>
           </div>
-          <div className="flex items-center space-x-2 text-sm text-gray-600">
+          <div className="flex items-center space-x-2 text-sm text-gray-500 bg-gray-50 px-3 py-2 rounded-full">
             <Clock className="h-4 w-4" />
-            <span>Analyzed {timeAgo}</span>
+            <span>{timeAgo}</span>
           </div>
         </div>
 
         {result.suggested_occupancies.length === 0 ? (
-          <div className="text-center py-8">
-            <p className="text-gray-600 mb-4">
-              No confident matches found. The description might be too vague or not match any occupancy codes.
+          <div className="text-center py-12 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl">
+            <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Brain className="h-8 w-8 text-gray-400" />
+            </div>
+            <p className="text-gray-600 mb-6 text-lg">
+              No confident matches found for your business description.
             </p>
-            <Button onClick={onReanalyze} variant="outline">
+            <Button 
+              onClick={onReanalyze} 
+              className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white px-6 py-3 rounded-xl font-medium shadow-sm hover:shadow-md transition-all duration-200"
+            >
               <RefreshCw className="mr-2 h-4 w-4" />
               Try Different Description
             </Button>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-6">
             {result.suggested_occupancies.map((suggestion, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+              <div key={index} className="bg-gradient-to-r from-gray-50 to-white border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-all duration-200">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    <div className="flex items-center space-x-2 mb-2">
-                      <div className="flex items-center space-x-2">
-                        <Badge className={getConfidenceBadgeClass(suggestion.confidence)}>
-                          {getConfidencePercentage(suggestion.confidence)}
-                        </Badge>
-                      </div>
-                      <span className="text-sm text-gray-500">#{index + 1}</span>
+                    <div className="flex items-center space-x-3 mb-4">
+                      <Badge className={`${getConfidenceBadgeClass(suggestion.confidence)} px-3 py-1 rounded-full text-xs font-medium`}>
+                        {getConfidencePercentage(suggestion.confidence)}
+                      </Badge>
+                      <span className="text-sm text-gray-400 bg-gray-100 px-2 py-1 rounded-full">#{index + 1}</span>
                     </div>
-                    <h3 className="font-semibold text-gray-900 mb-2">
+                    <h3 className="font-semibold text-gray-900 mb-3 text-lg">
                       {suggestion.occupancy}
                     </h3>
-                    <p className="text-sm text-gray-600 mb-3">
+                    <p className="text-gray-600 mb-4 leading-relaxed">
                       {suggestion.reason}
                     </p>
                   </div>
-                  <div className="flex items-center space-x-2 ml-4">
+                  <div className="flex items-center space-x-3 ml-6">
                     <Button
                       size="sm"
-                      variant="ghost"
-                      className={`p-2 transition-colors ${
+                      className={`w-10 h-10 rounded-full transition-all duration-200 ${
                         feedbackSubmitted.has(index) 
-                          ? 'text-green-600 bg-green-50' 
-                          : 'text-green-600 hover:bg-green-50'
+                          ? 'bg-green-100 text-green-600 shadow-sm' 
+                          : 'bg-white text-green-600 hover:bg-green-50 shadow-sm border border-green-200'
                       }`}
                       onClick={() => handleFeedbackClick(suggestion, index, 'positive')}
                       disabled={feedbackSubmitted.has(index)}
                       title="Correct suggestion"
                     >
-                      <ThumbsUp className="h-4 w-4" />
+                      {feedbackSubmitted.has(index) ? <Check className="h-4 w-4" /> : <ThumbsUp className="h-4 w-4" />}
                     </Button>
                     <Button
                       size="sm"
-                      variant="ghost"
-                      className="p-2 text-red-600 hover:bg-red-50 transition-colors"
+                      className="w-10 h-10 rounded-full bg-white text-red-600 hover:bg-red-50 shadow-sm border border-red-200 transition-all duration-200"
                       onClick={() => handleFeedbackClick(suggestion, index, 'negative')}
                       disabled={feedbackSubmitted.has(index)}
                       title="Incorrect suggestion"
@@ -153,34 +157,33 @@ export default function AnalysisResults({ result, onFeedback, onReanalyze }: Ana
         )}
 
         {result.overall_reasoning && (
-          <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-            <h4 className="font-medium text-gray-900 mb-2 flex items-center">
-              <Brain className="mr-2 text-primary h-4 w-4" />
-              AI Analysis Summary
+          <div className="mt-8 p-6 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl border border-indigo-100">
+            <h4 className="font-semibold text-indigo-900 mb-3 flex items-center text-lg">
+              <Brain className="mr-2 text-indigo-600 h-5 w-5" />
+              AI Reasoning Summary
             </h4>
-            <p className="text-sm text-gray-700">
+            <p className="text-indigo-800 leading-relaxed">
               {result.overall_reasoning}
             </p>
           </div>
         )}
 
-        <div className="mt-6 flex items-center justify-between">
+        <div className="mt-8 flex items-center justify-between">
           <Button 
-            variant="ghost"
             onClick={onReanalyze}
-            className="flex items-center space-x-2 text-sm text-gray-600 hover:text-gray-900"
+            className="bg-white text-gray-600 hover:text-gray-900 border border-gray-200 hover:border-gray-300 px-6 py-3 rounded-xl font-medium shadow-sm hover:shadow-md transition-all duration-200"
           >
-            <RefreshCw className="h-4 w-4" />
-            <span>Re-analyze</span>
+            <RefreshCw className="h-4 w-4 mr-2" />
+            <span>Try Again</span>
           </Button>
           <Button 
-            className="success-button px-4 py-2 font-medium"
+            className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-6 py-3 rounded-xl font-medium shadow-sm hover:shadow-md transition-all duration-200"
           >
             <Check className="mr-2 h-4 w-4" />
             Accept Selected
           </Button>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

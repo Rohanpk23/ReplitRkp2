@@ -27,7 +27,6 @@ export default function CorrectionModal({
   const [correctionReason, setCorrectionReason] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [filteredCodes, setFilteredCodes] = useState<OccupancyCode[]>([]);
   const { toast } = useToast();
 
   const { data: occupancyCodes = [] } = useQuery<OccupancyCode[]>({
@@ -35,34 +34,17 @@ export default function CorrectionModal({
     enabled: isOpen
   });
 
+  // Reset form when modal closes
   useEffect(() => {
     if (!isOpen) {
       setCorrectOccupancy("");
       setCorrectionReason("");
       setShowSuggestions(false);
-      setFilteredCodes([]);
     }
   }, [isOpen]);
 
-  useEffect(() => {
-    if (correctOccupancy && occupancyCodes.length > 0) {
-      const filtered = occupancyCodes.filter(code =>
-        code.code.toLowerCase().includes(correctOccupancy.toLowerCase())
-      ).slice(0, 8); // Show max 8 suggestions
-      setFilteredCodes(filtered);
-      setShowSuggestions(filtered.length > 0 && correctOccupancy.length > 0);
-    } else {
-      setFilteredCodes([]);
-      setShowSuggestions(false);
-    }
-  }, [correctOccupancy, occupancyCodes]);
-
   const handleInputChange = (value: string) => {
     setCorrectOccupancy(value);
-    // Close suggestions when typing to prevent loops
-    if (showSuggestions) {
-      setShowSuggestions(false);
-    }
   };
 
   const handleSuggestionClick = (code: string) => {
@@ -136,25 +118,28 @@ export default function CorrectionModal({
                 type="text"
                 value={correctOccupancy}
                 onChange={(e) => handleInputChange(e.target.value)}
-                onFocus={() => setShowSuggestions(filteredCodes.length > 0)}
+                onFocus={() => setShowSuggestions(correctOccupancy.length > 0)}
                 placeholder="Type or search for occupancy code..."
                 className="pr-10"
               />
               <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
             </div>
             
-            {showSuggestions && filteredCodes.length > 0 && (
+            {showSuggestions && correctOccupancy && occupancyCodes.length > 0 && (
               <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg max-h-48 overflow-y-auto">
-                {filteredCodes.map((code) => (
-                  <button
-                    key={code.id}
-                    type="button"
-                    className="w-full text-left px-3 py-2 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 text-sm"
-                    onClick={() => handleSuggestionClick(code.code)}
-                  >
-                    {code.code}
-                  </button>
-                ))}
+                {occupancyCodes
+                  .filter(code => code.code.toLowerCase().includes(correctOccupancy.toLowerCase()))
+                  .slice(0, 8)
+                  .map((code) => (
+                    <button
+                      key={code.id}
+                      type="button"
+                      className="w-full text-left px-3 py-2 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 text-sm"
+                      onClick={() => handleSuggestionClick(code.code)}
+                    >
+                      {code.code}
+                    </button>
+                  ))}
               </div>
             )}
           </div>
