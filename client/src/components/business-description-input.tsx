@@ -64,7 +64,7 @@ export default function BusinessDescriptionInput({
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <Label htmlFor="business-description" className="block text-sm font-medium text-gray-700 mb-2">
-              Customer's Business Description
+              Enter your business description in hindi/english/hinglish and I will suggest the WC occupancies with confidence Score
             </Label>
             <Textarea
               id="business-description"
