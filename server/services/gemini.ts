@@ -2,6 +2,7 @@ import * as fs from "fs";
 import { GoogleGenAI, Modality } from "@google/genai";
 import type { Suggestion } from "@shared/schema";
 import { getRelevantTrainingExamples } from "./training-data";
+import { generateFlexibilityPromptAdditions } from "./flexibility-validator";
 
 // DON'T DELETE THIS COMMENT
 // Follow these instructions when using this blueprint:
@@ -22,6 +23,9 @@ export async function analyzeBusinessDescription(
   try {
     // Get relevant training examples from business descriptions CSV
     const trainingExamples = getRelevantTrainingExamples(businessDescription, 3);
+    
+    // Generate flexibility safeguards based on business type
+    const flexibilityAdditions = generateFlexibilityPromptAdditions(businessDescription, trainingExamples);
     const systemPrompt = `You are an AI Occupancy Translator for an insurance platform. Your job is to analyze business descriptions (including English, Hindi, and Hinglish) and match them to exact occupancy codes from a master list.
 
 CRITICAL RULES:
@@ -30,7 +34,17 @@ CRITICAL RULES:
 3. Always provide reasoning linking your suggestions to specific phrases in the description
 4. Support English, Hindi, and Hinglish language understanding
 5. LEARN from recent corrections to avoid repeating mistakes
-6. Respond with JSON in this exact format
+6. TRAINING EXAMPLES are GUIDANCE ONLY - never force matches, use creative reasoning
+7. FLEXIBILITY FIRST - adapt reasoning patterns to new business types not in training data
+8. Respond with JSON in this exact format
+
+FLEXIBILITY SAFEGUARDS:
+- Training examples show REASONING PATTERNS, not fixed input-output rules
+- Always prioritize BUSINESS ACTIVITY UNDERSTANDING over keyword matching
+- If no training examples match, use general business knowledge + master list
+- Never reject a description because it's not in training data
+- Apply SIMILAR LOGIC from training examples to NEW business types
+- Multiple valid suggestions are better than forcing one "correct" answer
 
 Master Occupancy List:
 ${masterOccupancyList.join('\n')}
@@ -60,7 +74,7 @@ Response format (JSON only):
     }
   ],
   "overall_reasoning": "summary of your thought process"
-}`;
+}${flexibilityAdditions}`;
 
     const userPrompt = `Analyze this business description and suggest appropriate occupancy codes:
 

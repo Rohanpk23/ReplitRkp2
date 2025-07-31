@@ -6,11 +6,20 @@ This is a full-stack web application that serves as an AI-powered occupancy code
 
 **Database Connection Status**: FULLY OPERATIONAL - PostgreSQL database connected and loaded with complete master occupancy list (300+ codes) from CSV source. AI suggestions now use authentic occupancy codes from master database, preventing hallucination and ensuring accuracy.
 
-**AI Learning System**: FULLY ACTIVE - The system now learns from TWO sources:
-1. **User Corrections**: Recent feedback from user corrections to avoid repeating mistakes
-2. **Training Examples**: Historical business descriptions with known correct occupancy codes from CSV data (41 examples) - AI automatically finds similar examples and uses them as reference patterns
+**AI Learning System**: FULLY ACTIVE with FLEXIBILITY SAFEGUARDS - The system learns from TWO sources while maintaining creative reasoning:
 
-The AI now leverages the `correct_occupancies_simplified` column from business descriptions Excel/CSV to provide more accurate suggestions by finding similar historical examples.
+1. **User Corrections**: Recent feedback from user corrections to avoid repeating mistakes
+2. **Training Examples**: Historical business descriptions with known correct occupancy codes from CSV data (41 examples) - AI uses these as **reasoning patterns**, not rigid rules
+
+**Core Flexibility Safeguards Implemented:**
+- Training examples serve as **guidance patterns** only, never forced matches
+- Novel business types get creative suggestions using general business knowledge
+- Minimum similarity thresholds prevent weak pattern matching
+- Business activity understanding prioritized over keyword matching
+- Multiple suggestions encouraged for complex descriptions
+- Comprehensive flexibility validation system prevents rule-based behavior
+
+The AI leverages the `correct_occupancies_simplified` column to learn **reasoning approaches** while staying adaptive to new business types not in training data.
 
 ## User Preferences
 

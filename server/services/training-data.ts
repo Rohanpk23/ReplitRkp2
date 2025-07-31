@@ -50,11 +50,12 @@ function extractOccupancyCode(simplifiedText: string): string {
 
 /**
  * Get relevant training examples for a business description
- * Uses keyword matching to find similar examples
+ * Uses flexible semantic matching to find similar examples
+ * SAFEGUARD: Never forces exact matches - provides reasoning patterns only
  */
 export function getRelevantTrainingExamples(
   businessDescription: string, 
-  maxExamples: number = 5
+  maxExamples: number = 3  // Reduced to prevent over-reliance
 ): TrainingExample[] {
   const allExamples = loadTrainingExamples();
   if (allExamples.length === 0) return [];
@@ -79,12 +80,18 @@ export function getRelevantTrainingExamples(
     return { example, score };
   });
   
-  // Return top scored examples
+  // SAFEGUARD: Only return examples with meaningful similarity
+  // Prevents forcing weak matches that could create rule-based behavior
+  const minMeaningfulScore = Math.max(3, descriptionLower.length * 0.1);
+  
   return scoredExamples
-    .filter(item => item.score > 0)
+    .filter(item => item.score >= minMeaningfulScore)
     .sort((a, b) => b.score - a.score)
     .slice(0, maxExamples)
-    .map(item => item.example);
+    .map(item => ({
+      ...item.example,
+      reason: `${item.example.reason} (Similarity guidance - adapt logic, don't copy)`
+    }));
 }
 
 /**
