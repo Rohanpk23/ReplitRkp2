@@ -3,6 +3,7 @@ import BusinessDescriptionInput from "@/components/business-description-input";
 import AnalysisResults from "@/components/analysis-results";
 import CorrectionModal from "@/components/correction-modal";
 import Sidebar from "@/components/sidebar";
+import Analytics from "@/pages/analytics";
 import type { AnalysisResponse, Suggestion } from "@shared/schema";
 
 export default function HomeContent() {
@@ -39,9 +40,10 @@ export default function HomeContent() {
   };
 
   return (
-    <>
-      <div className="grid grid-cols-1 xl:grid-cols-4 gap-8">
-        <div className="xl:col-span-3">
+    <div className="space-y-8">
+      {/* Main Analysis Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div className="lg:col-span-3">
           <BusinessDescriptionInput
             onAnalysisStart={handleAnalysisStart}
             onAnalysisComplete={handleAnalysisComplete}
@@ -57,9 +59,14 @@ export default function HomeContent() {
           )}
         </div>
         
-        <div className="xl:col-span-1">
+        <div className="lg:col-span-1">
           <Sidebar />
         </div>
+      </div>
+
+      {/* Analytics Dashboard Section */}
+      <div className="border-t border-gray-200 pt-8">
+        <Analytics />
       </div>
 
       <CorrectionModal
@@ -68,6 +75,6 @@ export default function HomeContent() {
         selectedSuggestion={selectedSuggestion}
         analysisId={analysisResult?.id}
       />
-    </>
+    </div>
   );
 }
