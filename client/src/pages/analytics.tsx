@@ -114,13 +114,24 @@ export default function Analytics() {
               <TooltipTrigger asChild>
                 <Info className="h-4 w-4 text-gray-500 cursor-help" />
               </TooltipTrigger>
-              <TooltipContent className="max-w-sm p-4 text-sm">
-                <div className="space-y-2">
-                  <p><strong>Total Analyses:</strong> Count of all business descriptions processed</p>
-                  <p><strong>Accuracy Rate:</strong> Percentage based on positive vs negative feedback received</p>
-                  <p><strong>Avg Processing:</strong> Average time taken by AI to analyze descriptions</p>
-                  <p><strong>Total Corrections:</strong> Number of times users provided corrections to improve suggestions</p>
-                  <p><strong>Confidence Levels:</strong> Distribution of AI confidence scores (High: 85-95%, Medium: 65-84%, Low: 40-64%)</p>
+              <TooltipContent className="max-w-md p-4 text-sm">
+                <div className="space-y-3">
+                  <div>
+                    <p><strong>Total Analyses:</strong> Simply counts how many business descriptions we've processed</p>
+                    <p className="text-xs text-gray-500">Formula: Count of all submissions</p>
+                  </div>
+                  <div>
+                    <p><strong>Accuracy Rate:</strong> 👍👎 <span className="text-blue-600">YOUR FEEDBACK MATTERS!</span> Shows how often our suggestions are helpful</p>
+                    <p className="text-xs text-gray-500">Formula: (Positive feedback ÷ Total feedback) × 100</p>
+                  </div>
+                  <div>
+                    <p><strong>Avg Processing:</strong> How fast our AI thinks - this is automatic</p>
+                    <p className="text-xs text-gray-500">Formula: Total processing time ÷ Number of analyses</p>
+                  </div>
+                  <div>
+                    <p><strong>Total Corrections:</strong> ✏️ <span className="text-orange-600">YOU HELP US LEARN!</span> When you correct our suggestions</p>
+                    <p className="text-xs text-gray-500">Formula: Count of correction submissions</p>
+                  </div>
                 </div>
               </TooltipContent>
             </Tooltip>
@@ -137,8 +148,21 @@ export default function Analytics() {
         <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-blue-600">Total Analyses</p>
+              <div className="flex-1">
+                <div className="flex items-center space-x-1 mb-1">
+                  <p className="text-sm font-medium text-blue-600">Total Analyses</p>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Info className="h-3 w-3 text-blue-500 cursor-help" />
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-xs p-3 text-sm">
+                        <p><strong>What this means:</strong> Simply counts every business description submitted</p>
+                        <p className="text-xs text-gray-500 mt-1">Formula: Count of all submissions</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </div>
                 <p className="text-2xl font-bold text-blue-900">{analytics.overview.totalAnalyses}</p>
               </div>
               <BarChart3 className="h-8 w-8 text-blue-600" />
@@ -149,8 +173,22 @@ export default function Analytics() {
         <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-green-600">Accuracy Rate</p>
+              <div className="flex-1">
+                <div className="flex items-center space-x-1 mb-1">
+                  <p className="text-sm font-medium text-green-600">Accuracy Rate</p>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Info className="h-3 w-3 text-green-500 cursor-help" />
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-xs p-3 text-sm">
+                        <p><strong>👍👎 YOUR THUMBS UP/DOWN MATTERS!</strong></p>
+                        <p>Shows how often our suggestions are helpful based on your feedback</p>
+                        <p className="text-xs text-gray-500 mt-1">Formula: (Thumbs up ÷ Total feedback) × 100</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </div>
                 <div className="flex items-center space-x-2">
                   <p className={`text-2xl font-bold ${getAccuracyColor(analytics.overview.accuracyRate)} text-green-900`}>
                     {analytics.overview.accuracyRate}%
@@ -169,8 +207,21 @@ export default function Analytics() {
         <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-purple-600">Avg Processing</p>
+              <div className="flex-1">
+                <div className="flex items-center space-x-1 mb-1">
+                  <p className="text-sm font-medium text-purple-600">Avg Processing</p>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Info className="h-3 w-3 text-purple-500 cursor-help" />
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-xs p-3 text-sm">
+                        <p><strong>What this means:</strong> How fast our AI thinks - this happens automatically</p>
+                        <p className="text-xs text-gray-500 mt-1">Formula: Total processing time ÷ Number of analyses</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </div>
                 <p className="text-2xl font-bold text-purple-900">{analytics.overview.avgProcessingTime}</p>
               </div>
               <Clock className="h-8 w-8 text-purple-600" />
@@ -181,8 +232,22 @@ export default function Analytics() {
         <Card className="bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-orange-600">Total Corrections</p>
+              <div className="flex-1">
+                <div className="flex items-center space-x-1 mb-1">
+                  <p className="text-sm font-medium text-orange-600">Total Corrections</p>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Info className="h-3 w-3 text-orange-500 cursor-help" />
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-xs p-3 text-sm">
+                        <p><strong>✏️ YOU HELP US LEARN!</strong></p>
+                        <p>Counts every time you correct our suggestions to teach us better</p>
+                        <p className="text-xs text-gray-500 mt-1">Formula: Count of correction submissions</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </div>
                 <p className="text-2xl font-bold text-orange-900">{analytics.overview.totalCorrections}</p>
               </div>
               <AlertTriangle className="h-8 w-8 text-orange-600" />
