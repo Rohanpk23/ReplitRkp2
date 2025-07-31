@@ -58,6 +58,10 @@ export class DatabaseStorage implements IStorage {
     return await db.select().from(occupancyCodes);
   }
 
+  async clearAllOccupancyCodes(): Promise<void> {
+    await db.delete(occupancyCodes);
+  }
+
   async createOccupancyCode(code: InsertOccupancyCode): Promise<OccupancyCode> {
     const [occupancyCode] = await db
       .insert(occupancyCodes)

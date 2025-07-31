@@ -44,6 +44,8 @@ export async function initializeOccupancyCodes(): Promise<void> {
       return;
     }
     
+    console.log(`Currently have ${existingCodes.length} codes - loading complete master list from CSV...`);
+    
     console.log("Loading occupancy codes from CSV...");
     const codes = readOccupancyCodesFromCSV();
     

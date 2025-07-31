@@ -254,6 +254,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Force reload all occupancy codes from master CSV
+  app.post("/api/reload-occupancy-master", async (req, res) => {
+    try {
+      console.log("Force reloading complete occupancy master...");
+      
+      // Force reload by clearing and reloading
+      await initializeOccupancyCodes();
+      
+      const finalCodes = await storage.getAllOccupancyCodes();
+      res.json({ 
+        message: "Occupancy master reloaded successfully", 
+        totalCodes: finalCodes.length 
+      });
+    } catch (error) {
+      console.error("Reload error:", error);
+      res.status(500).json({ error: "Failed to reload occupancy master" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
