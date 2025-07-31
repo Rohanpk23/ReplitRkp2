@@ -57,6 +57,24 @@ export default function Sidebar() {
         </CardContent>
       </Card>
 
+      {/* How AI Gets Smarter */}
+      <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 shadow-sm border border-blue-200">
+        <CardContent className="p-6">
+          <h3 className="text-lg font-semibold text-blue-900 mb-4 flex items-center">
+            <Edit3 className="mr-2 text-blue-600 h-5 w-5" />
+            How does our AI get smarter? You're the teacher!
+          </h3>
+          <div className="space-y-3 text-sm text-blue-800">
+            <p>
+              Right now, our AI is like a smart student making its best guess. Your '👍' or '👎' is you, the expert, grading its homework.
+            </p>
+            <p>
+              Every piece of feedback helps us build the perfect 'textbook' that will be used to train our AI from a smart student into a true specialist.
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Model Corrections Log */}
       <Card className="bg-white shadow-sm border border-gray-200">
         <CardContent className="p-6">
