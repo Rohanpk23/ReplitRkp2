@@ -31,71 +31,51 @@ export default function Sidebar() {
 
   return (
     <div className="space-y-6">
-      {/* AI Learning Info */}
-      <div className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl p-6 shadow-sm border border-blue-100">
-        <div className="flex items-center space-x-3 mb-4">
-          <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
-            <Edit3 className="text-white h-4 w-4" />
+      <Card className="bg-white shadow-sm border border-gray-200">
+        <CardContent className="p-4">
+          <div className="flex items-center space-x-2 mb-3">
+            <Edit3 className="text-primary h-4 w-4" />
+            <h3 className="text-md font-medium text-gray-900">AI Learning System</h3>
           </div>
-          <h3 className="text-lg font-semibold text-blue-900">AI Learning</h3>
-        </div>
-        <div className="space-y-3 text-sm text-blue-800 leading-relaxed">
-          <p>
-            Your feedback helps our AI become more accurate. Every thumbs up or down teaches the system what works.
-          </p>
-          <p>
-            We're building smarter occupancy matching through your expertise.
-          </p>
-        </div>
-      </div>
+          <div className="text-sm text-gray-600 space-y-2">
+            <p>System learns from your feedback to improve accuracy over time.</p>
+          </div>
+        </CardContent>
+      </Card>
 
-      {/* Recent Corrections */}
-      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
-        <div className="p-6">
-          <div className="flex items-center space-x-3 mb-6">
-            <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg flex items-center justify-center">
-              <History className="text-white h-4 w-4" />
-            </div>
-            <h3 className="text-lg font-semibold text-gray-900">Recent Corrections</h3>
+      <Card className="bg-white shadow-sm border border-gray-200">
+        <CardContent className="p-4">
+          <div className="flex items-center space-x-2 mb-3">
+            <History className="text-primary h-4 w-4" />
+            <h3 className="text-md font-medium text-gray-900">Recent Corrections</h3>
           </div>
           
-          <div className="space-y-4">
+          <div className="space-y-3">
             {recentCorrections.length === 0 ? (
-              <div className="text-center py-8 bg-gray-50 rounded-xl">
-                <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <FileText className="h-6 w-6 text-gray-400" />
-                </div>
-                <p className="text-gray-500 text-sm">No corrections yet</p>
-                <p className="text-gray-400 text-xs mt-1">Feedback will appear here</p>
+              <div className="text-center py-6 text-gray-500">
+                <FileText className="h-8 w-8 mx-auto mb-2 text-gray-400" />
+                <p className="text-sm">No corrections yet</p>
               </div>
             ) : (
-              <div className="space-y-3">
-                <div className="text-xs text-gray-500 bg-gray-50 px-3 py-2 rounded-full text-center">
-                  {recentCorrections.length} total corrections
-                </div>
-                {recentCorrections.slice(0, 4).map((correction, index) => (
-                  <div key={index} className="bg-gradient-to-r from-orange-50 to-red-50 border border-orange-200 rounded-xl p-4">
-                    <div className="font-medium text-orange-900 mb-2 text-sm">
+              <div className="space-y-2">
+                {recentCorrections.slice(0, 3).map((correction, index) => (
+                  <div key={index} className="p-3 bg-orange-50 border border-orange-200 rounded-lg">
+                    <div className="font-medium text-sm text-gray-900">
                       {correction.occupancyCode}
                     </div>
-                    <div className="text-orange-700 mb-2 text-sm">
+                    <div className="text-sm text-orange-600">
                       → {correction.correctionCode}
                     </div>
-                    <div className="text-xs text-gray-500">
+                    <div className="text-xs text-gray-500 mt-1">
                       {formatTimeAgo(correction.createdAt)}
                     </div>
                   </div>
                 ))}
-                {recentCorrections.length > 4 && (
-                  <div className="text-xs text-gray-400 text-center py-2">
-                    +{recentCorrections.length - 4} more corrections
-                  </div>
-                )}
               </div>
             )}
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

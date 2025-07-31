@@ -54,43 +54,41 @@ export default function BusinessDescriptionInput({
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
-      <div className="p-8">
-        <div className="flex items-center space-x-3 mb-6">
-          <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
-            <Edit className="text-white h-4 w-4" />
-          </div>
-          <h2 className="text-xl font-semibold text-gray-900">Describe Your Business</h2>
+    <Card className="bg-white shadow-sm border border-gray-200">
+      <CardContent className="p-6">
+        <div className="flex items-center space-x-2 mb-4">
+          <Edit className="text-primary h-5 w-5" />
+          <h2 className="text-lg font-semibold text-gray-900">Business Description Input</h2>
         </div>
         
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <Label htmlFor="business-description" className="block text-sm font-medium text-gray-700 mb-3">
-              What does your business do?
+            <Label htmlFor="business-description" className="block text-sm font-medium text-gray-700 mb-2">
+              Enter your business description
             </Label>
             <Textarea
               id="business-description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={6}
-              className="w-full resize-none rounded-xl border-gray-200 focus:border-rose-300 focus:ring-rose-200 text-base px-4 py-3"
-              placeholder="Describe your business activities in detail..."
+              className="w-full resize-none"
+              placeholder="Tell me about your business"
               disabled={isAnalyzing}
             />
           </div>
           
-          <div className="flex justify-end">
+          <div className="flex items-center justify-between">
             <Button 
               type="submit" 
               disabled={isAnalyzing}
-              className="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white px-8 py-3 rounded-xl font-medium shadow-sm hover:shadow-md transition-all duration-200 disabled:opacity-50"
+              className="primary-button px-6 py-2 font-medium"
             >
               <Search className="mr-2 h-4 w-4" />
-              {isAnalyzing ? "Analyzing..." : "Find Occupancy Codes"}
+              {isAnalyzing ? "Analyzing..." : "Analyze & Match"}
             </Button>
           </div>
         </form>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }

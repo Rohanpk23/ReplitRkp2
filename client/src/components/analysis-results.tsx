@@ -76,18 +76,16 @@ export default function AnalysisResults({ result, onFeedback, onReanalyze }: Ana
   const timeAgo = new Date(result.createdAt).toLocaleString();
 
   return (
-    <div className="mt-8 bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
-      <div className="p-8">
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center">
-              <List className="text-white h-4 w-4" />
-            </div>
-            <h2 className="text-xl font-semibold text-gray-900">AI Analysis Results</h2>
+    <Card className="mt-8 bg-white shadow-sm border border-gray-200">
+      <CardContent className="p-6">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center space-x-2">
+            <List className="text-primary h-5 w-5" />
+            <h2 className="text-lg font-semibold text-gray-900">Analysis Results</h2>
           </div>
-          <div className="flex items-center space-x-2 text-sm text-gray-500 bg-gray-50 px-3 py-2 rounded-full">
+          <div className="flex items-center space-x-2 text-sm text-gray-600">
             <Clock className="h-4 w-4" />
-            <span>{timeAgo}</span>
+            <span>Analyzed {timeAgo}</span>
           </div>
         </div>
 
@@ -157,33 +155,28 @@ export default function AnalysisResults({ result, onFeedback, onReanalyze }: Ana
         )}
 
         {result.overall_reasoning && (
-          <div className="mt-8 p-6 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl border border-indigo-100">
-            <h4 className="font-semibold text-indigo-900 mb-3 flex items-center text-lg">
-              <Brain className="mr-2 text-indigo-600 h-5 w-5" />
-              AI Reasoning Summary
+          <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <h4 className="font-medium text-blue-900 mb-2 flex items-center">
+              <Brain className="mr-2 text-blue-600 h-4 w-4" />
+              AI Reasoning
             </h4>
-            <p className="text-indigo-800 leading-relaxed">
+            <p className="text-blue-800 text-sm">
               {result.overall_reasoning}
             </p>
           </div>
         )}
 
-        <div className="mt-8 flex items-center justify-between">
+        <div className="mt-6 flex items-center justify-between">
           <Button 
             onClick={onReanalyze}
-            className="bg-white text-gray-600 hover:text-gray-900 border border-gray-200 hover:border-gray-300 px-6 py-3 rounded-xl font-medium shadow-sm hover:shadow-md transition-all duration-200"
+            variant="outline"
+            className="flex items-center space-x-2"
           >
-            <RefreshCw className="h-4 w-4 mr-2" />
-            <span>Try Again</span>
-          </Button>
-          <Button 
-            className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-6 py-3 rounded-xl font-medium shadow-sm hover:shadow-md transition-all duration-200"
-          >
-            <Check className="mr-2 h-4 w-4" />
-            Accept Selected
+            <RefreshCw className="h-4 w-4" />
+            <span>Analyze Again</span>
           </Button>
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }
