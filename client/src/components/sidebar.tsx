@@ -1,8 +1,9 @@
-import { FileText, History, List, Edit3 } from "lucide-react";
+import { FileText, History, List, Edit3, BarChart3, Home } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { getRecentCorrections } from "@/lib/api";
+import { Link, useLocation } from "wouter";
 
 interface Correction {
   occupancyCode: string;
@@ -11,6 +12,7 @@ interface Correction {
 }
 
 export default function Sidebar() {
+  const [location] = useLocation();
   const { data: recentCorrections = [] } = useQuery<Correction[]>({
     queryKey: ['/api/recent-corrections'],
     refetchInterval: 60000 // Refresh every minute
@@ -29,6 +31,32 @@ export default function Sidebar() {
 
   return (
     <div className="space-y-6">
+      {/* Navigation */}
+      <Card className="bg-white shadow-sm border border-gray-200">
+        <CardContent className="p-4">
+          <nav className="space-y-2">
+            <Link href="/">
+              <Button 
+                variant={location === "/" ? "default" : "ghost"} 
+                className={`w-full justify-start ${location === "/" ? "bg-primary text-primary-foreground" : "text-gray-700 hover:bg-gray-100"}`}
+              >
+                <Home className="mr-2 h-4 w-4" />
+                Home
+              </Button>
+            </Link>
+            <Link href="/analytics">
+              <Button 
+                variant={location === "/analytics" ? "default" : "ghost"}
+                className={`w-full justify-start ${location === "/analytics" ? "bg-primary text-primary-foreground" : "text-gray-700 hover:bg-gray-100"}`}
+              >
+                <BarChart3 className="mr-2 h-4 w-4" />
+                Analytics
+              </Button>
+            </Link>
+          </nav>
+        </CardContent>
+      </Card>
+
       {/* Model Corrections Log */}
       <Card className="bg-white shadow-sm border border-gray-200">
         <CardContent className="p-6">
