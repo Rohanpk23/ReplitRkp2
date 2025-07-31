@@ -39,7 +39,7 @@ export async function initializeOccupancyCodes(): Promise<void> {
     // Check if codes already exist
     const existingCodes = await storage.getAllOccupancyCodes();
     
-    if (existingCodes.length >= 150) { // Already have a good amount of codes
+    if (existingCodes.length >= 280) { // Close to complete master list
       console.log(`Database already has ${existingCodes.length} occupancy codes - skipping initialization`);
       return;
     }
