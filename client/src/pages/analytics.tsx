@@ -109,33 +109,6 @@ export default function Analytics() {
         <div className="flex items-center space-x-2">
           <Activity className="h-6 w-6 text-primary" />
           <h1 className="text-2xl font-bold text-gray-900">Analytics Dashboard</h1>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Info className="h-4 w-4 text-gray-500 cursor-help" />
-              </TooltipTrigger>
-              <TooltipContent className="max-w-md p-4 text-sm">
-                <div className="space-y-3">
-                  <div>
-                    <p><strong>Total Analyses:</strong> Simply counts how many business descriptions we've processed</p>
-                    <p className="text-xs text-gray-500">Formula: Count of all submissions</p>
-                  </div>
-                  <div>
-                    <p><strong>Accuracy Rate:</strong> 👍👎 <span className="text-blue-600">YOUR FEEDBACK MATTERS!</span> Shows how often our suggestions are helpful</p>
-                    <p className="text-xs text-gray-500">Formula: (Positive feedback ÷ Total feedback) × 100</p>
-                  </div>
-                  <div>
-                    <p><strong>Avg Processing:</strong> How fast our AI thinks - this is automatic</p>
-                    <p className="text-xs text-gray-500">Formula: Total processing time ÷ Number of analyses</p>
-                  </div>
-                  <div>
-                    <p><strong>Total Corrections:</strong> ✏️ <span className="text-orange-600">YOU HELP US LEARN!</span> When you correct our suggestions</p>
-                    <p className="text-xs text-gray-500">Formula: Count of correction submissions</p>
-                  </div>
-                </div>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
         </div>
         <Badge variant="outline" className="text-sm">
           <Calendar className="h-3 w-3 mr-1" />
