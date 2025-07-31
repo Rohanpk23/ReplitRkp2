@@ -39,8 +39,8 @@ export async function initializeOccupancyCodes(): Promise<void> {
     // Check if codes already exist
     const existingCodes = await storage.getAllOccupancyCodes();
     
-    if (existingCodes.length >= 280) { // Close to complete master list
-      console.log(`Database already has ${existingCodes.length} occupancy codes - skipping initialization`);
+    if (existingCodes.length >= 295) { // Close to complete master list  
+      console.log(`Database already has ${existingCodes.length} occupancy codes - initialization complete`);
       return;
     }
     
@@ -75,7 +75,11 @@ export async function initializeOccupancyCodes(): Promise<void> {
       }
     }
     
-    console.log(`Successfully loaded ${insertedCount} occupancy codes into database`);
+    const finalCodes = await storage.getAllOccupancyCodes();
+    console.log('\n=== OCCUPANCY MASTER LOADING COMPLETE ===');
+    console.log(`New codes inserted: ${insertedCount}`);
+    console.log(`Final total in database: ${finalCodes.length} occupancy codes`);
+    console.log('==========================================');
   } catch (error) {
     console.error("Error initializing occupancy codes:", error);
   }
