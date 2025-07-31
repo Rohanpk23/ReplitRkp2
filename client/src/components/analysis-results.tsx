@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { List, Clock, ThumbsUp, ThumbsDown, RefreshCw, Check, Brain, Link, Info } from "lucide-react";
+import { List, Clock, ThumbsUp, ThumbsDown, RefreshCw, Check, Brain, Link } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -110,12 +110,6 @@ export default function AnalysisResults({ result, onFeedback, onReanalyze }: Ana
                         <Badge className={getConfidenceBadgeClass(suggestion.confidence)}>
                           {getConfidencePercentage(suggestion.confidence)}
                         </Badge>
-                        <div 
-                          className="flex items-center text-gray-400 hover:text-gray-600 cursor-help"
-                          title={getConfidenceReasoningTitle(suggestion.confidence)}
-                        >
-                          <Info className="h-4 w-4" />
-                        </div>
                       </div>
                       <span className="text-sm text-gray-500">#{index + 1}</span>
                     </div>

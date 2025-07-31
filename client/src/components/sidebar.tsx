@@ -29,36 +29,6 @@ export default function Sidebar() {
 
   return (
     <div className="space-y-6">
-      {/* Business Descriptions Dataset */}
-      <Card className="bg-white shadow-sm border border-gray-200">
-        <CardContent className="p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-            <FileText className="mr-2 text-primary h-5 w-5" />
-            Business Descriptions
-          </h3>
-          <div className="space-y-4">
-            <div className="text-sm text-gray-600">
-              <p className="mb-2">Training dataset loaded successfully:</p>
-              <ul className="space-y-1 text-xs">
-                <li>• 41 business descriptions</li>
-                <li>• English & Hinglish support</li>
-                <li>• Real occupancy mappings</li>
-                <li>• Hinglish transcripts & structured data</li>
-              </ul>
-            </div>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="w-full text-xs"
-              onClick={() => window.open('/api/business-descriptions', '_blank')}
-            >
-              <List className="mr-2 h-3 w-3" />
-              View Full Dataset
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-
       {/* Model Corrections Log */}
       <Card className="bg-white shadow-sm border border-gray-200">
         <CardContent className="p-6">
