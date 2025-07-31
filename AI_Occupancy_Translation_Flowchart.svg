@@ -1,0 +1,229 @@
+<svg viewBox="0 0 1400 1800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .title { font: bold 24px Arial; text-anchor: middle; fill: #1a365d; }
+      .subtitle { font: bold 16px Arial; text-anchor: middle; fill: #2d3748; }
+      .box-text { font: 12px Arial; text-anchor: middle; fill: #1a202c; }
+      .small-text { font: 10px Arial; text-anchor: middle; fill: #4a5568; }
+      .input-box { fill: #e6f3ff; stroke: #2b6cb0; stroke-width: 2; }
+      .process-box { fill: #f0fff4; stroke: #38a169; stroke-width: 2; }
+      .ai-box { fill: #fef5e7; stroke: #d69e2e; stroke-width: 2; }
+      .database-box { fill: #f7fafc; stroke: #4a5568; stroke-width: 2; }
+      .output-box { fill: #fed7d7; stroke: #e53e3e; stroke-width: 2; }
+      .decision-box { fill: #edf2f7; stroke: #4a5568; stroke-width: 2; }
+      .arrow { fill: none; stroke: #2d3748; stroke-width: 2; marker-end: url(#arrowhead); }
+      .feedback-arrow { fill: none; stroke: #e53e3e; stroke-width: 2; marker-end: url(#arrowhead-red); stroke-dasharray: 5,5; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2d3748" />
+    </marker>
+    <marker id="arrowhead-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#e53e3e" />
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="700" y="30" class="title">AI Occupancy Translation System - Complete Flow</text>
+  <text x="700" y="55" class="subtitle">Multilingual Business Description to Insurance Occupancy Code Translation</text>
+
+  <!-- Input Layer -->
+  <rect x="50" y="100" width="200" height="80" class="input-box" rx="10"/>
+  <text x="150" y="125" class="box-text">USER INPUT</text>
+  <text x="150" y="145" class="small-text">Business Description</text>
+  <text x="150" y="160" class="small-text">English / Hindi / Hinglish</text>
+  <text x="150" y="175" class="small-text">"कपड़ा बुनाई का काम"</text>
+
+  <!-- Language Detection -->
+  <rect x="300" y="100" width="180" height="80" class="process-box" rx="10"/>
+  <text x="390" y="125" class="box-text">LANGUAGE PROCESSING</text>
+  <text x="390" y="145" class="small-text">Automatic Detection:</text>
+  <text x="390" y="160" class="small-text">English, Hindi, Hinglish</text>
+  <text x="390" y="175" class="small-text">Mixed language support</text>
+
+  <!-- Data Sources -->
+  <rect x="50" y="220" width="150" height="100" class="database-box" rx="10"/>
+  <text x="125" y="245" class="box-text">MASTER</text>
+  <text x="125" y="260" class="box-text">OCCUPANCY LIST</text>
+  <text x="125" y="280" class="small-text">288+ Codes</text>
+  <text x="125" y="295" class="small-text">From CSV Source</text>
+  <text x="125" y="310" class="small-text">Prevents hallucination</text>
+
+  <rect x="220" y="220" width="150" height="100" class="database-box" rx="10"/>
+  <text x="295" y="245" class="box-text">TRAINING DATA</text>
+  <text x="295" y="260" class="box-text">CSV (41 Examples)</text>
+  <text x="295" y="280" class="small-text">Business descriptions</text>
+  <text x="295" y="295" class="small-text">+ correct occupancies</text>
+  <text x="295" y="310" class="small-text">Reasoning patterns</text>
+
+  <rect x="390" y="220" width="150" height="100" class="database-box" rx="10"/>
+  <text x="465" y="245" class="box-text">RECENT</text>
+  <text x="465" y="260" class="box-text">CORRECTIONS</text>
+  <text x="465" y="280" class="small-text">User feedback</text>
+  <text x="465" y="295" class="small-text">Wrong → Correct</text>
+  <text x="465" y="310" class="small-text">Learning from mistakes</text>
+
+  <!-- AI Processing Core -->
+  <rect x="580" y="100" width="240" height="220" class="ai-box" rx="15"/>
+  <text x="700" y="125" class="box-text">GEMINI 2.5 PRO AI ENGINE</text>
+  
+  <!-- Flexibility Validator -->
+  <rect x="590" y="140" width="100" height="60" class="process-box" rx="5"/>
+  <text x="640" y="160" class="small-text">FLEXIBILITY</text>
+  <text x="640" y="175" class="small-text">VALIDATOR</text>
+  <text x="640" y="190" class="small-text">Prevents rigid rules</text>
+
+  <!-- Training Example Selector -->
+  <rect x="710" y="140" width="100" height="60" class="process-box" rx="5"/>
+  <text x="760" y="160" class="small-text">TRAINING</text>
+  <text x="760" y="175" class="small-text">SELECTOR</text>
+  <text x="760" y="190" class="small-text">Finds similar patterns</text>
+
+  <!-- Key Processing Steps inside AI -->
+  <text x="700" y="220" class="small-text">1. Extract business activity keywords</text>
+  <text x="700" y="235" class="small-text">2. Find relevant training patterns (max 3)</text>
+  <text x="700" y="250" class="small-text">3. Apply flexibility safeguards</text>
+  <text x="700" y="265" class="small-text">4. Match to authentic occupancy codes</text>
+  <text x="700" y="280" class="small-text">5. Generate reasoning + confidence %</text>
+  <text x="700" y="295" class="small-text">6. Validate against master list</text>
+
+  <!-- Decision Point -->
+  <polygon points="650,350 750,350 775,380 750,410 650,410 625,380" class="decision-box"/>
+  <text x="700" y="375" class="box-text">CONFIDENT</text>
+  <text x="700" y="390" class="box-text">MATCH?</text>
+
+  <!-- Output Paths -->
+  <!-- Confident Path -->
+  <rect x="850" y="340" width="180" height="80" class="output-box" rx="10"/>
+  <text x="940" y="365" class="box-text">SUGGESTIONS OUTPUT</text>
+  <text x="940" y="385" class="small-text">Occupancy codes with</text>
+  <text x="940" y="400" class="small-text">confidence % + reasoning</text>
+
+  <!-- No Match Path -->
+  <rect x="450" y="340" width="120" height="80" class="output-box" rx="10"/>
+  <text x="510" y="365" class="box-text">NO MATCH</text>
+  <text x="510" y="385" class="small-text">Empty array</text>
+  <text x="510" y="400" class="small-text">Better than wrong</text>
+
+  <!-- User Interface -->
+  <rect x="850" y="480" width="200" height="100" class="process-box" rx="10"/>
+  <text x="950" y="505" class="box-text">USER INTERFACE</text>
+  <text x="950" y="525" class="small-text">Display suggestions</text>
+  <text x="950" y="540" class="small-text">Show confidence levels</text>
+  <text x="950" y="555" class="small-text">Enable feedback options</text>
+  <text x="950" y="570" class="small-text">👍 👎 ✏️ correction</text>
+
+  <!-- Feedback Processing -->
+  <rect x="600" y="480" width="200" height="100" class="database-box" rx="10"/>
+  <text x="700" y="505" class="box-text">FEEDBACK PROCESSING</text>
+  <text x="700" y="525" class="small-text">Positive/Negative logging</text>
+  <text x="700" y="540" class="small-text">Correction storage</text>
+  <text x="700" y="555" class="small-text">Gemini 2.5 Flash response</text>
+  <text x="700" y="570" class="small-text">Learning loop activation</text>
+
+  <!-- Analytics Dashboard -->
+  <rect x="300" y="480" width="200" height="100" class="ai-box" rx="10"/>
+  <text x="400" y="505" class="box-text">ANALYTICS DASHBOARD</text>
+  <text x="400" y="525" class="small-text">Accuracy: (👍 ÷ Total) × 100</text>
+  <text x="400" y="540" class="small-text">Total analyses count</text>
+  <text x="400" y="555" class="small-text">Processing time avg</text>
+  <text x="400" y="570" class="small-text">Corrections count</text>
+
+  <!-- Confidence Level Details -->
+  <rect x="1070" y="340" width="200" height="180" class="process-box" rx="10"/>
+  <text x="1170" y="365" class="box-text">CONFIDENCE LEVELS</text>
+  
+  <rect x="1080" y="380" width="180" height="25" fill="#dcfce7" stroke="#16a34a" rx="5"/>
+  <text x="1170" y="397" class="small-text">HIGH (85-95%): Strong match</text>
+  
+  <rect x="1080" y="410" width="180" height="25" fill="#fef3c7" stroke="#d97706" rx="5"/>
+  <text x="1170" y="427" class="small-text">MEDIUM (65-84%): Good match</text>
+  
+  <rect x="1080" y="440" width="180" height="25" fill="#fecaca" stroke="#dc2626" rx="5"/>
+  <text x="1170" y="457" class="small-text">LOW (40-64%): Uncertain match</text>
+
+  <text x="1170" y="485" class="small-text">Confidence based on:</text>
+  <text x="1170" y="500" class="small-text">• Training similarity</text>
+  <text x="1170" y="515" class="small-text">• Keyword matches</text>
+
+  <!-- Multilingual Processing Details -->
+  <rect x="50" y="650" width="300" height="120" class="ai-box" rx="10"/>
+  <text x="200" y="675" class="box-text">MULTILINGUAL PROCESSING</text>
+  <text x="200" y="700" class="small-text">✓ Hindi: "कपड़ा बुनाई का काम" → Textile weaving</text>
+  <text x="200" y="715" class="small-text">✓ English: "Construction work" → Direct match</text>
+  <text x="200" y="730" class="small-text">✓ Hinglish: "Software development karna hai"</text>
+  <text x="200" y="745" class="small-text">✓ Mixed: "Building construction + welding kaam"</text>
+  <text x="200" y="760" class="small-text">No translation needed - AI understands context</text>
+
+  <!-- Learning System Details -->
+  <rect x="400" y="650" width="300" height="120" class="database-box" rx="10"/>
+  <text x="550" y="675" class="box-text">LEARNING SYSTEM COMPONENTS</text>
+  <text x="550" y="700" class="small-text">1. Recent Corrections (immediate learning)</text>
+  <text x="550" y="715" class="small-text">2. Training Examples (pattern guidance)</text>
+  <text x="550" y="730" class="small-text">3. Flexibility Safeguards (creativity)</text>
+  <text x="550" y="745" class="small-text">4. Master List Validation (accuracy)</text>
+  <text x="550" y="760" class="small-text">Prevents both overfitting and hallucination</text>
+
+  <!-- File Impact Details -->
+  <rect x="750" y="650" width="300" height="120" class="process-box" rx="10"/>
+  <text x="900" y="675" class="box-text">INPUT FILES IMPACT</text>
+  <text x="900" y="700" class="small-text">📄 occupancy_master.csv → 288+ valid codes</text>
+  <text x="900" y="715" class="small-text">📄 business_descriptions.csv → 41 examples</text>
+  <text x="900" y="730" class="small-text">📄 nature_of_work_master.csv → Additional context</text>
+  <text x="900" y="745" class="small-text">Real data prevents AI hallucination</text>
+  <text x="900" y="760" class="small-text">Training examples guide reasoning patterns</text>
+
+  <!-- Feedback Loop Details -->
+  <rect x="1100" y="650" width="250" height="120" class="output-box" rx="10"/>
+  <text x="1225" y="675" class="box-text">FEEDBACK LOOP MECHANICS</text>
+  <text x="1225" y="700" class="small-text">👍 Positive → Accuracy calculation</text>
+  <text x="1225" y="715" class="small-text">👎 Negative → Analytics tracking</text>
+  <text x="1225" y="730" class="small-text">✏️ Correction → Learning data</text>
+  <text x="1225" y="745" class="small-text">Stored for next analysis session</text>
+  <text x="1225" y="760" class="small-text">Continuous improvement cycle</text>
+
+  <!-- Arrows -->
+  <!-- Main flow -->
+  <line x1="250" y1="140" x2="300" y2="140" class="arrow"/>
+  <line x1="480" y1="140" x2="580" y2="140" class="arrow"/>
+  
+  <!-- Data sources to AI -->
+  <line x1="125" y1="220" x2="580" y2="180" class="arrow"/>
+  <line x1="295" y1="220" x2="630" y2="200" class="arrow"/>
+  <line x1="465" y1="220" x2="720" y2="200" class="arrow"/>
+  
+  <!-- AI to decision -->
+  <line x1="700" y1="320" x2="700" y2="350" class="arrow"/>
+  
+  <!-- Decision outcomes -->
+  <line x1="775" y1="380" x2="850" y2="380" class="arrow"/>
+  <line x1="625" y1="380" x2="570" y2="380" class="arrow"/>
+  
+  <!-- To UI -->
+  <line x1="940" y1="420" x2="940" y2="480" class="arrow"/>
+  
+  <!-- UI to feedback -->
+  <line x1="850" y1="530" x2="800" y2="530" class="arrow"/>
+  
+  <!-- Feedback to analytics -->
+  <line x1="600" y1="530" x2="500" y2="530" class="arrow"/>
+  
+  <!-- Feedback loop back to AI -->
+  <line x1="600" y1="480" x2="580" y2="460" class="feedback-arrow"/>
+  <line x1="580" y1="460" x2="580" y2="200" class="feedback-arrow"/>
+  
+  <!-- Confidence details -->
+  <line x1="1030" y1="380" x2="1070" y2="380" class="arrow"/>
+
+  <!-- Labels for decision paths -->
+  <text x="800" y="370" class="small-text">YES</text>
+  <text x="600" y="370" class="small-text">NO</text>
+
+  <!-- Legend -->
+  <rect x="50" y="1650" width="1300" height="120" fill="#f8f9fa" stroke="#dee2e6" stroke-width="1" rx="10"/>
+  <text x="700" y="1675" class="subtitle">System Characteristics</text>
+  
+  <text x="80" y="1700" class="small-text">🔹 MULTILINGUAL: Native support for Hindi, English, Hinglish without translation</text>
+  <text x="80" y="1720" class="small-text">🔹 AUTHENTIC DATA: Only suggests from 288+ real occupancy codes, prevents hallucination</text>
+  <text x="80" y="1740" class="small-text">🔹 LEARNING SYSTEM: Uses corrections + training examples as guidance patterns, not rigid rules</text>
+  <text x="80" y="1760" class="small-text">🔹 FLEXIBILITY SAFEGUARDS: Creativity for novel business types, prevents overfitting to training data</text>
+</svg>
